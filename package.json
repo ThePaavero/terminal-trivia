@@ -10,7 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "colors": "^1.4.0",
-    "lodash": "^4.17.15",
     "prompts": "^2.2.1"
   }
 }
