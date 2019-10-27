@@ -25,14 +25,19 @@ const doOnIncorrectAnswer = (correctAnswer) => {
 }
 
 const userAnswerIsCorrect = (userAnswer, correctAnswer) => {
-  // @todo Do better than this, the data is pretty crappy.
+  // Start with a direct comparison.
+  if (userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase()) {
+    // No guess work needed, nice!
+    return true
+  }
+
   /*
   Ideas:
     - If the correct answer starts with "The ", remove it and compare again.
     - Sometimes the correct answers are words instead of numbers, like "Eleven." When the answer is numerical we want to accept both textual version and actual numbers.
   */
   console.log(userAnswer)
-  return userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase()
+  return false
 }
 
 const doRound = async () => {
@@ -50,6 +55,8 @@ const doRound = async () => {
 
 const cleanUpDataObject = () => {
   data = data.map(item => {
+    item.q = item.q.replace(/�/g, '')
+    item.a = item.a.replace(/�/g, '')
     return item
   })
 }
