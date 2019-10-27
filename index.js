@@ -1,5 +1,5 @@
 const prompts = require('prompts')
-const data = require('./database')
+let data = require('./database')
 require('colors')
 
 const getRandomQuestionObject = (data) => {
@@ -12,7 +12,7 @@ const promptAnswerForQuestion = async (question) => {
     name: 'answer',
     message: question.q,
   })
-  return answerObject.answer
+  return answerObject.answer ? answerObject.answer : ''
 }
 
 const doOnCorrectAnswer = (answer) => {
@@ -31,6 +31,7 @@ const userAnswerIsCorrect = (userAnswer, correctAnswer) => {
     - If the correct answer starts with "The ", remove it and compare again.
     - Sometimes the correct answers are words instead of numbers, like "Eleven." When the answer is numerical we want to accept both textual version and actual numbers.
   */
+  console.log(userAnswer)
   return userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase()
 }
 
@@ -47,8 +48,15 @@ const doRound = async () => {
   setTimeout(doRound, 2000)
 }
 
+const cleanUpDataObject = () => {
+  data = data.map(item => {
+    return item
+  })
+}
+
 const init = () => {
   console.clear()
+  cleanUpDataObject()
   console.log(`Welcome to Terminal Trivia!`.bgWhite.black)
   doRound()
 }
