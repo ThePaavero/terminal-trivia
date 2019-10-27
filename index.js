@@ -45,9 +45,11 @@ const userAnswerIsCorrect = (userAnswer, correctAnswer) => {
   Ideas:
     - Sometimes the correct answers are words instead of numbers, like "Eleven." When the answer is numerical we want to accept both textual version and actual numbers.
     - Sometimes the correct answers like "3 times", maybe try again with removing the "times" part
+    - Some answer strings are in fact ENUM types of arrays (comma separated), and at least in some of the question, the question string states something like "Name at least one of [...]". In this case, break the options up and accept any of them.
     - Try again with "The" removed
     - Try again with adding "The" to user's answer
     - Try again with "a" and "an" removed
+    - Try again with "it" and "its" removed
     - Try again with apostrophes removed
     - Try again with quotation marks removed
     - Try again if the correct answer is short and has a comma. Match again with the part before the comma (e.g. "Dallas, Texas" -> "Dallas" should be considered correct).
