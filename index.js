@@ -44,16 +44,17 @@ const userAnswerIsCorrect = (userAnswer, correctAnswer) => {
   /*
   Ideas:
     - Sometimes the correct answers are words instead of numbers, like "Eleven." When the answer is numerical we want to accept both textual version and actual numbers.
-    - Sometimes the correct answers like "3 times", maybe try again with removing the "times" part
-    - Sometimes the correct answer has something in parenthesis after the actual answer, e.g. "Elvis Presley (musician)." Fuck that, just compare against what's before the "("
+    - Sometimes the correct answers like "3 times", maybe try again with removing the "times" part.
+    - Sometimes the correct answer has something in parenthesis after the actual answer, e.g. "Elvis Presley (musician)." Fuck that, just compare against what's before the "(".
     - Some answer strings are in fact ENUM types of arrays (comma separated), and at least in some of the question, the question string states something like "Name at least one of [...]". In this case, break the options up and accept any of them.
-    - Singular vs. plural; try again with adding an "s" to the user's answer, for example
-    - Try again with "The" removed
-    - Try again with adding "The" to user's answer
-    - Try again with "a" and "an" removed
-    - Try again with "it" and "its" removed
-    - Try again with apostrophes removed
-    - Try again with quotation marks removed
+    - If the correct answer is something like "high-five" and the user answered with "high five", try again with removing the hyphen.
+    - Singular vs. plural; try again with adding an "s" to the user's answer, for example.
+    - Try again with "The" removed.
+    - Try again with adding "The" to user's answer.
+    - Try again with "a" and "an" removed.
+    - Try again with "it" and "its" removed.
+    - Try again with apostrophes removed.
+    - Try again with quotation marks removed.
     - Try again if the correct answer is short and has a comma. Match again with the part before the comma (e.g. "Dallas, Texas" -> "Dallas" should be considered correct).
     - Try again if the correct answer is short and has " - " in it. Match again with the part before the " - " (e.g. "Alcatraz - main prison block" -> "Alcatraz" should be considered correct).
   */
