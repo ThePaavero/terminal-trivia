@@ -45,6 +45,7 @@ const userAnswerIsCorrect = (userAnswer, correctAnswer) => {
   Ideas:
     - Sometimes the correct answers are words instead of numbers, like "Eleven." When the answer is numerical we want to accept both textual version and actual numbers.
     - Sometimes the correct answers like "3 times", maybe try again with removing the "times" part
+    - Sometimes the correct answer has something in parenthesis after the actual answer, e.g. "Elvis Presley (musician)." Fuck that, just compare against what's before the "("
     - Some answer strings are in fact ENUM types of arrays (comma separated), and at least in some of the question, the question string states something like "Name at least one of [...]". In this case, break the options up and accept any of them.
     - Singular vs. plural; try again with adding an "s" to the user's answer, for example
     - Try again with "The" removed
@@ -84,7 +85,7 @@ const init = () => {
   console.clear()
   cleanUpDataObject()
   console.log(`Welcome to Terminal Trivia!`.bgWhite.black)
-  doRound()
+  setTimeout(doRound, 2000)
 }
 
 init()
