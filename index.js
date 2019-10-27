@@ -46,6 +46,7 @@ const userAnswerIsCorrect = (userAnswer, correctAnswer) => {
     - Sometimes the correct answers are words instead of numbers, like "Eleven." When the answer is numerical we want to accept both textual version and actual numbers.
     - Sometimes the correct answers like "3 times", maybe try again with removing the "times" part
     - Some answer strings are in fact ENUM types of arrays (comma separated), and at least in some of the question, the question string states something like "Name at least one of [...]". In this case, break the options up and accept any of them.
+    - Singular vs. plural; try again with adding an "s" to the user's answer, for example
     - Try again with "The" removed
     - Try again with adding "The" to user's answer
     - Try again with "a" and "an" removed
