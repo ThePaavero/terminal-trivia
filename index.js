@@ -46,10 +46,12 @@ const userAnswerIsCorrect = (userAnswer, correctAnswer) => {
     - Sometimes the correct answers are words instead of numbers, like "Eleven." When the answer is numerical we want to accept both textual version and actual numbers.
     - Sometimes the correct answers like "3 times", maybe try again with removing the "times" part
     - Try again with "The" removed
+    - Try again with adding "The" to user's answer
     - Try again with "a" and "an" removed
     - Try again with apostrophes removed
     - Try again with quotation marks removed
     - Try again if the correct answer is short and has a comma. Match again with the part before the comma (e.g. "Dallas, Texas" -> "Dallas" should be considered correct).
+    - Try again if the correct answer is short and has " - " in it. Match again with the part before the " - " (e.g. "Alcatraz - main prison block" -> "Alcatraz" should be considered correct).
   */
   return false
 }
