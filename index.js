@@ -2,8 +2,16 @@ const prompts = require('prompts')
 let data = require('./database')
 require('colors')
 
+let usedQuestionObjects = []
+
 const getRandomQuestionObject = (data) => {
-  return data[Math.round(Math.random() * data.length - 1)]
+  const result = data[Math.round(Math.random() * data.length - 1)]
+  if (usedQuestionObjects.includes(result)) {
+    // We've already given this question object. Try again.
+    return getRandomQuestionObject(data)
+  }
+  usedQuestionObjects.push(result)
+  return result
 }
 
 const promptAnswerForQuestion = async (question) => {
@@ -19,9 +27,11 @@ const doOnCorrectAnswer = (answer) => {
   console.log(`${answer} is absolutely correct!`.green)
 }
 
-const doOnIncorrectAnswer = (correctAnswer) => {
-  // ...
-  console.log(`Wrong, sorry!`.red + `\nThe correct answer would've been "${correctAnswer}"`.gray)
+const doOnIncorrectAnswer = (userAnswer, correctAnswer) => {
+  if (userAnswer.trim() === '') {
+    return console.log(`The correct answer would've been "${correctAnswer}"`.gray)
+  }
+  console.log(`"${userAnswer}" is wrong, sorry!`.red + `\nThe correct answer would've been "${correctAnswer}"`.gray)
 }
 
 const userAnswerIsCorrect = (userAnswer, correctAnswer) => {
@@ -33,10 +43,14 @@ const userAnswerIsCorrect = (userAnswer, correctAnswer) => {
 
   /*
   Ideas:
-    - If the correct answer starts with "The ", remove it and compare again.
     - Sometimes the correct answers are words instead of numbers, like "Eleven." When the answer is numerical we want to accept both textual version and actual numbers.
+    - Sometimes the correct answers like "3 times", maybe try again with removing the "times" part
+    - Try again with "The" removed
+    - Try again with "a" and "an" removed
+    - Try again with apostrophes removed
+    - Try again with quotation marks removed
+    - Try again if the correct answer is short and has a comma. Match again with the part before the comma (e.g. "Dallas, Texas" -> "Dallas" should be considered correct).
   */
-  console.log(userAnswer)
   return false
 }
 
@@ -46,9 +60,9 @@ const doRound = async () => {
   const userAnswer = await promptAnswerForQuestion(questionObject)
   const correctAnswer = questionObject.a
   if (userAnswerIsCorrect(userAnswer, correctAnswer)) {
-    doOnCorrectAnswer(userAnswer)
+    doOnCorrectAnswer(correctAnswer)
   } else {
-    doOnIncorrectAnswer(correctAnswer)
+    doOnIncorrectAnswer(userAnswer, correctAnswer)
   }
   setTimeout(doRound, 2000)
 }
