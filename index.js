@@ -1,5 +1,5 @@
 const prompts = require('prompts')
-const fs = require('fs')
+const data = require('./database')
 require('colors')
 
 const getRandomQuestionObject = (data) => {
@@ -7,17 +7,26 @@ const getRandomQuestionObject = (data) => {
 }
 
 const promptAnswerForQuestion = async (question) => {
-  return await prompts({
+  const answerObject = await prompts({
     type: 'text',
     name: 'answer',
     message: question.q,
   })
+  return answerObject.answer
+}
+
+const doRound = async () => {
+  const questionObject = getRandomQuestionObject(data)
+  const userAnswer = await promptAnswerForQuestion(questionObject)
+  const correctAnswer = questionObject.a
+  console.log(userAnswer)
+  console.log(correctAnswer)
 }
 
 const init = () => {
   console.clear()
   console.log(`Welcome to Terminal Trivia!`.bgWhite.black)
-  promptAnswerForQuestion(getRandomQuestionObject(JSON.parse(fs.readFileSync('database.json'))))
+  doRound()
 }
 
 init()
